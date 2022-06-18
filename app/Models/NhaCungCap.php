@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class NhaCungCap extends Model
 {
     use HasFactory;
+    protected $table = 'nhacungcaps';
+
     protected $fillable = [
         'id',
         'ten_ncc',
@@ -16,4 +18,6 @@ class NhaCungCap extends Model
         'dia_chi',
         'dien_thoai'
     ];
+
+    public $timestamps = true;
 }

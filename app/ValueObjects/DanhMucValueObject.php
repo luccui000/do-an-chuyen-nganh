@@ -10,7 +10,7 @@ class DanhMucValueObject implements ValueObject
         private int|null $id,
         private string $ten_dm,
         private string|null $hinh_anh,
-        private string $thu_tu,
+        private int|null $thu_tu,
         private string|null $la_noi_bat,
     )
     {

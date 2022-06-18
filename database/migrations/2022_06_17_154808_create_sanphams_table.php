@@ -18,14 +18,14 @@ return new class extends Migration
             $table->foreignId('danhmuc_id')->constrained('danhmucs');
             $table->foreignId('thuonghieu_id')->constrained('thuonghieus');
             $table->foreignId('nhacungcap_id')->constrained('nhacungcaps');
+            $table->string('ten_sp', 200);
             $table->string('hinh_anh', 200)->nullable();
             $table->string('ma_sp', 100);
             $table->string('mo_ta_ngan', 200);
             $table->text('mo_ta')->nullable();
             $table->double('gia_sp');
             $table->double('gia_khuyen_mai');
-            $table->tinyInteger('sp_noi_bat')->default(0);
-            $table->tinyInteger('sp_noi_bat')->default(1);
+            $table->tinyInteger('sp_noi_bat')->default(0)->nullable();
             $table->timestamps();
         });
     }

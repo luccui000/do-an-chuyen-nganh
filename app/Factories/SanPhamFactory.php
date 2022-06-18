@@ -13,6 +13,7 @@ class SanPhamFactory implements Factory
         return new SanPhamValueObject(
             id: array_key_exists('id', $attributes) ?
                 data_get($attributes, 'id') : null,
+            ten_sp: $attributes['ten_sp'],
             danhmuc_id: data_get($attributes, 'danhmuc_id'),
             thuonghieu_id: data_get($attributes, 'thuonghieu_id'),
             nhacungcap_id: data_get($attributes, 'nhacungcap_id'),
@@ -25,7 +26,11 @@ class SanPhamFactory implements Factory
             gia_sp: floatval(data_get($attributes, 'gia_sp')),
             gia_khuyen_mai: floatval(data_get($attributes, 'gia_khuyen_mai')),
             sp_noi_bat: array_key_exists('sp_noi_bat', $attributes) ?
-                data_get($attributes, 'sp_noi_bat'): null
+                data_get($attributes, 'sp_noi_bat'): null,
+            created_at: array_key_exists('created_at', $attributes) ?
+                data_get($attributes, 'created_at') : time(),
+            updated_at: array_key_exists('updated_at', $attributes) ?
+                data_get($attributes, 'updated_at') : time(),
         );
     }
 }

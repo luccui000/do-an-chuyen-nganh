@@ -12,13 +12,14 @@ class DanhMucFactory implements Factory
     {
         return new DanhMucValueObject(
             id: array_key_exists('id', $attributes) ?
-                data_get($attributes, 'id') : null,
-            ten_dm: data_get('ten_dm', $attributes),
+                $attributes['id'] : null,
+            ten_dm: $attributes['ten_dm'],
             hinh_anh: array_key_exists('hinh_anh', $attributes) ?
-                data_get($attributes, 'hinh_anh') : null,
-            thu_tu: data_get('thu_tu', $attributes),
+                $attributes['hinh_anh'] : null,
+            thu_tu: array_key_exists('thu_tu', $attributes) ?
+                intval($attributes['thu_tu']): null,
             la_noi_bat: array_key_exists('la_noi_bat', $attributes) ?
-                data_get($attributes, 'la_noi_bat') : null,
+                $attributes['la_noi_bat'] : null,
         );
     }
 }

@@ -9,8 +9,11 @@ class SanPham extends Model
 {
     use HasFactory;
 
+    protected $table = 'sanphams';
+
     protected $fillable = [
         'id',
+        'ten_sp',
         'danhmuc_id',
         'thuonghieu_id',
         'nhacungcap_id',
@@ -22,6 +25,8 @@ class SanPham extends Model
         'gia_khuyen_mai',
         'sp_noi_bat',
     ];
+    public $timestamps = true;
+
     public function nhacungcap()
     {
         return $this->belongsTo(NhaCungCap::class);
