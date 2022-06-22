@@ -30,5 +30,14 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-
+    'ghn' => [
+        'base_uri' => env('GIAO_HANG_NHAN_BASE_URI'),
+        'shop_id' => env('GIAO_HANG_NHANH_SHOPID'),
+        'from_district_id' => env('GIAO_HANG_NHANH_FROM_DISTRICT_ID'),
+        'token' => env('GIAO_HANG_NHANH_TOKEN'),
+    ],
+    'vnpay' => [
+        'tmncode' => env('VNPAY_TMNCODE'),
+        'hashsecret' => env('VNPAY_HASHSECRET')
+    ]
 ];

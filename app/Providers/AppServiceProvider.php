@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Classes\DiaChi;
+use App\Contracts\DiaChiInterface;
+use App\Contracts\GiaoHangInterface;
+use App\Services\GiaoHangNhanh;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +17,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(DiaChiInterface::class, function ($app) {
+            return new DiaChi(config('services.ghn'));
+        });
+        $this->app->singleton(GiaoHangInterface::class, function ($app) {
+            return new GiaoHangNhanh(config('services.ghn'));
+        });
     }
 
     /**
