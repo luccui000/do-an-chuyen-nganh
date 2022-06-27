@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,6 +28,13 @@ class SanPham extends Model
     ];
     public $timestamps = true;
 
+    public function hinhAnh(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value, $attributes) => url($value)
+        );
+    }
+
     public function nhacungcap()
     {
         return $this->belongsTo(NhaCungCap::class);
@@ -41,6 +49,11 @@ class SanPham extends Model
     }
     public function tonkhos()
     {
-        return $this->hasMany(TonKho::class);
+        return $this->hasMany(TonKho::class, 'sanpham_id', 'id')
+            ->orderBy('created_at', 'desc');
+    }
+    public function donhang()
+    {
+        return $this->belongsToMany(DonHang::class, 'chitiet_donhangs', 'sanpham_id', 'donhang_id');
     }
 }

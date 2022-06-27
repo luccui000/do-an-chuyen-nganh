@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'jwt',
+            'provider' => 'khachhangs',
+            'hash' => false
+        ]
     ],
 
     /*
@@ -64,6 +69,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+        'khachhangs' => [
+            'driver' => 'eloquent',
+            'model' => \App\Models\KhachHang::class
+        ]
 
         // 'users' => [
         //     'driver' => 'database',

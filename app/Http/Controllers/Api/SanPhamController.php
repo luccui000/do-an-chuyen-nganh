@@ -15,12 +15,45 @@ class SanPhamController extends Controller
 {
     public function index()
     {
+        $sanphams = SanPham::with([
+            'danhmuc',
+            'nhacungcap',
+            'tonkhos',
+        ])->get();
+
         return new JsonResponse(
-            data: SanPham::all(),
+            data: $sanphams,
             status: JsonResponse::HTTP_OK
         );
     }
+    public function dexuat()
+    {
+        $sanphams = SanPham::with([
+            'danhmuc',
+            'nhacungcap',
+            'tonkhos',
+        ])->limit(4)->get();
 
+        return new JsonResponse(
+            data: $sanphams,
+            status: JsonResponse::HTTP_OK
+        );
+    }
+    public function muanhieu()
+    {
+        $sanphams = SanPham::with([
+            'danhmuc',
+            'nhacungcap',
+            'tonkhos',
+        ])->orderBy('sp_noi_bat', 'desc')
+            ->limit(12)
+            ->get();
+
+        return new JsonResponse(
+            data: $sanphams,
+            status: JsonResponse::HTTP_OK
+        );
+    }
     public function store(SanPhamRequest $request)
     {
         $sanpham = SanPhamFactory::make($request->all())

@@ -13,6 +13,8 @@ class SliderController extends Controller
 {
     public function index()
     {
+        $sliders = Slider::all();
+
         return new JsonResponse(
             data: Slider::all(),
             status: 200
