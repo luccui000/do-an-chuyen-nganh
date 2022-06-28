@@ -15,8 +15,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('/testing', function() {
+    return "fortesting";
+});
 Route::get('/san-pham/de-xuat', [SanPhamController::class, 'dexuat']);
 Route::get('/san-pham/mua-nhieu', [SanPhamController::class, 'muanhieu']);
+Route::get('/san-pham/uu-dai', [SanPhamController::class, 'uudai']);
 
 Route::apiResource('sliders', SliderController::class);
 Route::apiResource('danh-muc', DanhMucController::class);

@@ -15,9 +15,11 @@ class SanPham extends Model
     protected $fillable = [
         'id',
         'ten_sp',
+        'slug',
         'danhmuc_id',
         'thuonghieu_id',
         'nhacungcap_id',
+        'quycach_id',
         'hinh_anh',
         'ma_sp',
         'mo_ta_ngan',
@@ -34,7 +36,17 @@ class SanPham extends Model
             get: fn($value, $attributes) => url($value)
         );
     }
-
+    public static function danhsach()
+    {
+        return static::with([
+            'danhmuc',
+            'thuonghieu',
+            'nhacungcap',
+            'quycach',
+            'tonkhos',
+        ])->orderBy('created_at', 'desc')
+            ->get();
+    }
     public function nhacungcap()
     {
         return $this->belongsTo(NhaCungCap::class);
@@ -46,6 +58,10 @@ class SanPham extends Model
     public function thuonghieu()
     {
         return $this->belongsTo(ThuongHieu::class);
+    }
+    public function quycach()
+    {
+        return $this->belongsTo(QuyCach::class);
     }
     public function tonkhos()
     {

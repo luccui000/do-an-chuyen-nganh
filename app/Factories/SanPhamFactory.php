@@ -14,9 +14,12 @@ class SanPhamFactory implements Factory
             id: array_key_exists('id', $attributes) ?
                 data_get($attributes, 'id') : null,
             ten_sp: $attributes['ten_sp'],
+            slug: array_key_exists('slug', $attributes) ?
+                $attributes['slug'] : $attributes['ten_sp'],
             danhmuc_id: data_get($attributes, 'danhmuc_id'),
             thuonghieu_id: data_get($attributes, 'thuonghieu_id'),
             nhacungcap_id: data_get($attributes, 'nhacungcap_id'),
+            quycach_id: data_get($attributes, 'quycach_id'),
             hinh_anh: array_key_exists('hinh_anh', $attributes) ?
                 data_get($attributes, 'hinh_anh'): null,
             ma_sp: data_get($attributes, 'ma_sp'),
@@ -26,11 +29,7 @@ class SanPhamFactory implements Factory
             gia_sp: floatval(data_get($attributes, 'gia_sp')),
             gia_khuyen_mai: floatval(data_get($attributes, 'gia_khuyen_mai')),
             sp_noi_bat: array_key_exists('sp_noi_bat', $attributes) ?
-                data_get($attributes, 'sp_noi_bat'): null,
-            created_at: array_key_exists('created_at', $attributes) ?
-                data_get($attributes, 'created_at') : time(),
-            updated_at: array_key_exists('updated_at', $attributes) ?
-                data_get($attributes, 'updated_at') : time(),
+                data_get($attributes, 'sp_noi_bat'): 0
         );
     }
 }

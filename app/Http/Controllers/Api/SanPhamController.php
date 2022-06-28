@@ -15,11 +15,7 @@ class SanPhamController extends Controller
 {
     public function index()
     {
-        $sanphams = SanPham::with([
-            'danhmuc',
-            'nhacungcap',
-            'tonkhos',
-        ])->get();
+        $sanphams = SanPham::danhsach();
 
         return new JsonResponse(
             data: $sanphams,
@@ -31,6 +27,7 @@ class SanPhamController extends Controller
         $sanphams = SanPham::with([
             'danhmuc',
             'nhacungcap',
+            'quycach',
             'tonkhos',
         ])->limit(4)->get();
 
@@ -44,9 +41,26 @@ class SanPhamController extends Controller
         $sanphams = SanPham::with([
             'danhmuc',
             'nhacungcap',
+            'quycach',
             'tonkhos',
         ])->orderBy('sp_noi_bat', 'desc')
             ->limit(12)
+            ->get();
+
+        return new JsonResponse(
+            data: $sanphams,
+            status: JsonResponse::HTTP_OK
+        );
+    }
+    public function uudai()
+    {
+        $sanphams = SanPham::with([
+            'danhmuc',
+            'nhacungcap',
+            'quycach',
+            'tonkhos',
+        ])->orderBy('sp_noi_bat', 'desc')
+            ->limit(6)
             ->get();
 
         return new JsonResponse(
@@ -58,7 +72,8 @@ class SanPhamController extends Controller
     {
         $sanpham = SanPhamFactory::make($request->all())
             ->toArray();
-        unset($sanpham['id']);
+        if(isset($sanpham['id']))
+            unset($sanpham['id']);
         $tonKho = $request->ton_kho;
         try {
             $sanpham = SanPham::create($sanpham);
@@ -84,7 +99,24 @@ class SanPhamController extends Controller
 
     public function show($id)
     {
-        //
+        if(is_numeric($id)) {
+            $field = 'id';
+        } else {
+            $field = 'slug';
+        }
+        $sanpham = SanPham::with([
+            'danhmuc',
+            'thuonghieu',
+            'nhacungcap',
+            'quycach',
+            'tonkhos',
+        ])->where($field, '=', $id)
+            ->firstOrFail();
+
+        return new JsonResponse(
+            data: $sanpham,
+            status: JsonResponse::HTTP_OK
+        );
     }
 
 
