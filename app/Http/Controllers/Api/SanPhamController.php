@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Factories\SanPhamFactory;
 use App\Factories\TonKhoFactory;
+use App\Filters\SanPhamFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SanPhamRequest;
 use App\Models\SanPham;
@@ -13,9 +14,24 @@ use Illuminate\Http\Request;
 
 class SanPhamController extends Controller
 {
-    public function index()
+		public function index(SanPhamFilter $filter) 
+		{
+				$sanphams = SanPham::with([
+            'danhmuc',
+            'nhacungcap',
+            'quycach',
+            'tonkhos'
+				])->filter($filter)->get();
+				return new JsonResponse(
+						data: $sanphams,
+						status: JsonResponse::HTTP_OK
+				);	
+		}
+    public function index(SanPhamFilter $filter)
     {
-        $sanphams = SanPham::danhsach();
+        $sanphams = SanPham::danhsach($filter)
+            ->paginate(8)
+            ->withQueryString();
 
         return new JsonResponse(
             data: $sanphams,
@@ -104,13 +120,16 @@ class SanPhamController extends Controller
         } else {
             $field = 'slug';
         }
-        $sanpham = SanPham::with([
-            'danhmuc',
-            'thuonghieu',
-            'nhacungcap',
-            'quycach',
-            'tonkhos',
-        ])->where($field, '=', $id)
+        $sanpham = SanPham::where($field, '=', $id)
+            ->with([
+                'danhmuc',
+                'thuonghieu',
+                'nhacungcap',
+                'quycach',
+                'tonkhos',
+            ])
+            ->withCount('danhgias')
+            ->withAvg('danhgias', 'so_sao')
             ->firstOrFail();
 
         return new JsonResponse(
