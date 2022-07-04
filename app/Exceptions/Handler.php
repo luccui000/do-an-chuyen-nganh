@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Prophecy\Exception\Doubler\MethodNotFoundException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -45,11 +47,21 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
+
         });
-        $this->renderable(function (NotFoundHttpException $e, $request) {
-           if($request->is('api/*')) {
-               return response()->json(['message' => 'Không tìm thấy'], 404);
-           }
-        });
+    }
+    public function render($request, Throwable $e)
+    {
+        if($request->is('api/*')) {
+            if($e instanceof NotFoundHttpException) {
+                return response()->json(['message' => 'Không tìm thấy'], 404);
+            }
+            if($e instanceof MethodNotAllowedHttpException) {
+                return response()->json([
+                    'message' => 'Không hỗ trợ phương thức ' . $request->getMethod()
+                ], 404);
+            }
+        }
+        return parent::render($request, $e);
     }
 }

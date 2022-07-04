@@ -2,15 +2,28 @@
 
 namespace App\Models;
 
+use App\Filters\SanPhamFilter;
+use App\Traits\HasFilter;
+use App\Traits\HasSearchable;
+use App\Traits\HasSortable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class SanPham extends Model
 {
-    use HasFactory;
+    use HasFactory, HasFilter, HasSortable, HasSearchable;
 
     protected $table = 'sanphams';
+
+    protected $searchable = [
+        'ma_sp',
+        'ten_sp',
+        'gia_sp',
+        'gia_khuyen_mai',
+        'mo_ta_ngan',
+        'mo_ta',
+    ];
 
     protected $fillable = [
         'id',
@@ -36,7 +49,7 @@ class SanPham extends Model
             get: fn($value, $attributes) => url($value)
         );
     }
-    public static function danhsach()
+    public static function danhsach(SanPhamFilter $filter)
     {
         return static::with([
             'danhmuc',
@@ -44,8 +57,10 @@ class SanPham extends Model
             'nhacungcap',
             'quycach',
             'tonkhos',
-        ])->orderBy('created_at', 'desc')
-            ->get();
+        ])
+            ->withCount('danhgias')
+            ->withAvg('danhgias', 'so_sao')
+            ->filter($filter);
     }
     public function nhacungcap()
     {
@@ -67,6 +82,10 @@ class SanPham extends Model
     {
         return $this->hasMany(TonKho::class, 'sanpham_id', 'id')
             ->orderBy('created_at', 'desc');
+    }
+    public function danhgias()
+    {
+        return $this->hasMany(DanhGia::class, 'sanpham_id');
     }
     public function donhang()
     {

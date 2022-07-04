@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\DangNhapController;
+use App\Http\Controllers\Api\ChiTietDonHangController;
 use App\Http\Controllers\Api\DanhMucController;
 use App\Http\Controllers\Api\DiaChiController;
+use App\Http\Controllers\Api\DonHangController;
 use App\Http\Controllers\Api\GiaoHangController;
 use App\Http\Controllers\Api\HinhAnhController;
 use App\Http\Controllers\Api\NhaCungCapController;
@@ -18,16 +21,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/testing', function() {
     return "fortesting";
 });
+Route::get('/san-pham/tat-ca', [SanPhamController::class, 'tatca']);
 Route::get('/san-pham/de-xuat', [SanPhamController::class, 'dexuat']);
 Route::get('/san-pham/mua-nhieu', [SanPhamController::class, 'muanhieu']);
 Route::get('/san-pham/uu-dai', [SanPhamController::class, 'uudai']);
 
+Route::get('/don-hang/tim-kiem', [DonHangController::class, 'timkiem']);
+
 Route::apiResource('sliders', SliderController::class);
 Route::apiResource('danh-muc', DanhMucController::class);
 Route::apiResource('thuonghieus', ThuongHieuController::class);
-Route::apiResource('nhacungcaps',  NhaCungCapController::class);
+Route::apiResource('nha-cung-cap',  NhaCungCapController::class);
 Route::apiResource('san-pham',  SanPhamController::class);
 Route::apiResource('hinhanhs',  HinhAnhController::class);
+Route::apiResource('don-hang', DonHangController::class);
+Route::apiResource('chi-tiet-don-hang', ChiTietDonHangController::class);
 
 
 Route::controller(DiaChiController::class)
@@ -51,4 +59,14 @@ Route::controller(XacThucController::class)
         Route::post('/dang-xuat', 'logout');
         Route::post('/thay-doi', 'refresh');
         Route::get('/thong-tin-ca-nhan', 'profile');
+});
+
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::controller(DangNhapController::class)
+        ->group(function() {
+            Route::post('/dang-ky', 'register');
+            Route::post('/dang-nhap', 'login');
+            Route::get('/tai-khoan', 'profile');
+        });
 });

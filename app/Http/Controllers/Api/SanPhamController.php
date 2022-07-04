@@ -14,19 +14,20 @@ use Illuminate\Http\Request;
 
 class SanPhamController extends Controller
 {
-		public function index(SanPhamFilter $filter) 
-		{
-				$sanphams = SanPham::with([
+	public function tatca(SanPhamFilter $filter) 
+	{
+		$sanphams = SanPham::with([
             'danhmuc',
             'nhacungcap',
             'quycach',
             'tonkhos'
-				])->filter($filter)->get();
-				return new JsonResponse(
-						data: $sanphams,
-						status: JsonResponse::HTTP_OK
-				);	
-		}
+		])->filter($filter)->get();
+
+		return new JsonResponse(
+			data: $sanphams,
+			status: JsonResponse::HTTP_OK
+		);	
+	}
     public function index(SanPhamFilter $filter)
     {
         $sanphams = SanPham::danhsach($filter)

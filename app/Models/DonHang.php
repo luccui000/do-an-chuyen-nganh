@@ -23,6 +23,7 @@ class DonHang extends Model
         'khachhang_id',
         'magiamgia_id',
         'phi_giao_hang',
+        'ma_xa',
         'thanh_tien',
         'tong_tien',
         'phuong_thuc_thanh_toan',
@@ -37,8 +38,25 @@ class DonHang extends Model
     {
         return $this->hasOne(MaGiamGia::class, 'magiamgia_id', 'id');
     }
-    public function sanpham()
+    public function sanphams()
     {
-        return $this->belongsToMany(SanPham::class, 'chitiet_sanpham', 'donhang_id', 'sanpham_id');
+        return $this->belongsToMany(SanPham::class, 'chitiet_donhangs', 'donhang_id', 'sanpham_id')
+            ->withPivot(['so_luong', 'don_gia', 'thanh_tien']);
+    }
+    public static function danhSachThanhToan()
+    {
+        return [
+            self::THANH_TOAN_KHI_NHAN_HANG,
+            self::THANH_TOAN_ONLINE,
+        ];
+    }
+    public static function trangThaiDonHang()
+    {
+        return [
+            self::DANG_CHO_XAC_NHAN,
+            self::DA_XAC_NHAN,
+            self::DA_HOAN_THANH,
+            self::DA_HUY
+        ];
     }
 }
