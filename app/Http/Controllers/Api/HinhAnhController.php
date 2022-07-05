@@ -6,6 +6,7 @@ use App\Factories\HinhAnhFactory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HinhAnhRequest;
 use App\Models\HinhAnh;
+use App\Transformers\HinhAnhTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -13,10 +14,10 @@ class HinhAnhController extends Controller
 {
     public function index()
     {
-        return new JsonResponse(
-            data: HinhAnh::all(),
-            status: JsonResponse::HTTP_OK
-        );
+        $hinhanhs = HinhAnh::all();
+
+        return fractal($hinhanhs, new HinhAnhTransformer())
+            ->respond(JsonResponse::HTTP_OK, [], JSON_PRETTY_PRINT);
     }
 
     public function store(HinhAnhRequest $request)
@@ -29,13 +30,16 @@ class HinhAnhController extends Controller
         $hinhAnh->move($destinationPath, $input['duong_dan']);
 
         $hinhanhValue = [
-            'duong_dan' => "/public/uploads/" . $input['duong_dan']
+            'duong_dan' => "/uploads/" . $input['duong_dan']
         ];
         try {
             $hinhanh = HinhAnh::create(
                 HinhAnhFactory::make($hinhanhValue)
                     ->toArray()
-            );
+						);
+
+						return fractal($hinhanh, new HinhAnhTransformer())
+							->respond(JsonResponse::HTTP_OK, [], JSON_PRETTY_PRINT);
             return new JsonResponse(
                 data: $hinhanh,
                 status: JsonResponse::HTTP_OK

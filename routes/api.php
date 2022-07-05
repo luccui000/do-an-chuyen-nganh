@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\HinhAnhController;
 use App\Http\Controllers\Api\NhaCungCapController;
 use App\Http\Controllers\Api\SanPhamController;
 use App\Http\Controllers\Api\SliderController;
+use App\Http\Controllers\Api\ThanhToanController;
 use App\Http\Controllers\Api\ThuongHieuController;
 use App\Http\Controllers\Api\XacThucController;
 use Illuminate\Http\Request;
@@ -33,10 +34,12 @@ Route::apiResource('danh-muc', DanhMucController::class);
 Route::apiResource('thuonghieus', ThuongHieuController::class);
 Route::apiResource('nha-cung-cap',  NhaCungCapController::class);
 Route::apiResource('san-pham',  SanPhamController::class);
-Route::apiResource('hinhanhs',  HinhAnhController::class);
+Route::apiResource('hinh-anh',  HinhAnhController::class);
 Route::apiResource('don-hang', DonHangController::class);
 Route::apiResource('chi-tiet-don-hang', ChiTietDonHangController::class);
 
+Route::post('/thanh-toan', [ThanhToanController::class, 'purchase']);
+Route::post('/thanh-toan/chuyen-huong', [ThanhToanController::class, 'url']);
 
 Route::controller(DiaChiController::class)
     ->prefix('/dia-chi')

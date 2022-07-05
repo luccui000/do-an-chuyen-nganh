@@ -20,11 +20,12 @@ class KhachHangFactory implements Factory
                 $attributes['ten_dang_nhap'] : null,
             email: array_key_exists('email', $attributes) ?
                 $attributes['email'] : null,
-            password: Hash::make($attributes['password']),
+            password: array_key_exists('password', $attributes) ?
+                Hash::make($attributes['password']) : null,
             dia_chi: array_key_exists('dia_chi', $attributes) ?
                 $attributes['dia_chi'] : null,
             ma_xa: array_key_exists('ma_xa', $attributes) ?
-                $attributes['so_dien_thoai'] : null,
+                $attributes['ma_xa'] : null,
             lan_dang_nhap_cuoi: array_key_exists('lan_dang_nhap_cuoi', $attributes) ?
                 $attributes['lan_dang_nhap_cuoi'] : Carbon::now(),
             ngay_xac_thuc_emai: array_key_exists('ngay_xac_thuc_email', $attributes) ?

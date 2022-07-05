@@ -37,7 +37,8 @@ return [
         'token' => env('GIAO_HANG_NHANH_TOKEN'),
     ],
     'vnpay' => [
-        'tmncode' => env('VNPAY_TMNCODE'),
-        'hashsecret' => env('VNPAY_HASHSECRET')
+        'code' => env('VNPAY_TMNCODE'),
+        'hash' => env('VNPAY_HASHSECRET'),
+        'callback' => env('VNPAY_CALLBACK'),
     ]
 ];

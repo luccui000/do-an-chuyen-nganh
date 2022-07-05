@@ -27,9 +27,9 @@ class KhachHangRequest extends FormRequest
             'ho_khach_hang' => 'required|max:30',
             'ten_khach_hang' => 'required|max:30',
             'so_dien_thoai' => 'required|unique:khachhangs|min:10|max:11',
-            'ten_dang_nhap' => 'required|unique:khachhangs|max:30',
+            'ten_dang_nhap' => 'unique:khachhangs|max:30',
             'email' => 'email|unique:khachhangs|max:50',
-            'password' => 'required|max:50'
+            'password' => 'max:50'
         ];
     }
     public function messages()
