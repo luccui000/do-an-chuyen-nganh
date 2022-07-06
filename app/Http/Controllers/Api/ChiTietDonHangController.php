@@ -19,6 +19,7 @@ class ChiTietDonHangController extends Controller
         $chitietdonhang = ChiTietDonHang::create(
             ChiTietDonHangFactory::make($request->all())->toArray()
         );
+        var_dump($chitietdonhang->donhang_id);
         return new JsonResponse(
             data: $chitietdonhang,
             status: JsonResponse::HTTP_OK

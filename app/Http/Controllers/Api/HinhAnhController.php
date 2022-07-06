@@ -38,12 +38,9 @@ class HinhAnhController extends Controller
                     ->toArray()
 						);
 
-						return fractal($hinhanh, new HinhAnhTransformer())
-							->respond(JsonResponse::HTTP_OK, [], JSON_PRETTY_PRINT);
-            return new JsonResponse(
-                data: $hinhanh,
-                status: JsonResponse::HTTP_OK
-            );
+            return fractal($hinhanh, new HinhAnhTransformer())
+                ->respond(JsonResponse::HTTP_OK, [], JSON_PRETTY_PRINT);
+
         } catch (\Exception $exception) {
             return new JsonResponse(
                 data: $exception->getMessage(),

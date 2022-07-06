@@ -21,8 +21,6 @@ class DonHang extends Model
         'id',
         'ma_don_hang',
         'khachhang_id',
-        'ho',
-        'ten',
         'magiamgia_id',
         'phi_giao_hang',
         'ma_xa',

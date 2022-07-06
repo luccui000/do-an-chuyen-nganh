@@ -4,10 +4,14 @@ use App\Http\Controllers\Api\Admin\DangNhapController;
 use App\Http\Controllers\Api\ChiTietDonHangController;
 use App\Http\Controllers\Api\DanhMucController;
 use App\Http\Controllers\Api\DiaChiController;
+use App\Http\Controllers\Api\DoanhThuController;
 use App\Http\Controllers\Api\DonHangController;
 use App\Http\Controllers\Api\GiaoHangController;
 use App\Http\Controllers\Api\HinhAnhController;
+use App\Http\Controllers\Api\KhachHangController;
 use App\Http\Controllers\Api\NhaCungCapController;
+use App\Http\Controllers\Api\PhuongThucThanhToanController;
+use App\Http\Controllers\Api\QuyCachController;
 use App\Http\Controllers\Api\SanPhamController;
 use App\Http\Controllers\Api\SliderController;
 use App\Http\Controllers\Api\ThanhToanController;
@@ -28,27 +32,21 @@ Route::get('/san-pham/mua-nhieu', [SanPhamController::class, 'muanhieu']);
 Route::get('/san-pham/uu-dai', [SanPhamController::class, 'uudai']);
 
 Route::get('/don-hang/tim-kiem', [DonHangController::class, 'timkiem']);
+Route::get('/don-hang/loc-theo', [DonHangController::class, 'loctheo']);
 
-Route::apiResource('sliders', SliderController::class);
-Route::apiResource('danh-muc', DanhMucController::class);
-Route::apiResource('thuonghieus', ThuongHieuController::class);
-Route::apiResource('nha-cung-cap',  NhaCungCapController::class);
-Route::apiResource('san-pham',  SanPhamController::class);
-Route::apiResource('hinh-anh',  HinhAnhController::class);
-Route::apiResource('don-hang', DonHangController::class);
-Route::apiResource('chi-tiet-don-hang', ChiTietDonHangController::class);
 
+Route::get('/thanh-toan/phuong-thuc-thanh-toan', [PhuongThucThanhToanController::class, '__invoke']);
 Route::post('/thanh-toan', [ThanhToanController::class, 'purchase']);
 Route::post('/thanh-toan/chuyen-huong', [ThanhToanController::class, 'url']);
 
 Route::controller(DiaChiController::class)
     ->prefix('/dia-chi')
     ->group(function () {
-    Route::get('/', 'danhsach');
-    Route::get('/ds-tinh-thanh', 'dsTinhThanh');
-    Route::get('/ds-quan-huyen', 'dsQuanHuyen');
-    Route::get('/ds-phuong-xa', 'dsPhuongXa');
-});
+        Route::get('/', 'danhsach');
+        Route::get('/ds-tinh-thanh', 'dsTinhThanh');
+        Route::get('/ds-quan-huyen', 'dsQuanHuyen');
+        Route::get('/ds-phuong-xa', 'dsPhuongXa');
+    });
 
 Route::controller(GiaoHangController::class)->group(function() {
     Route::post('/giao-hang/phi-van-chuyen', 'phiVanChuyen');
@@ -62,7 +60,7 @@ Route::controller(XacThucController::class)
         Route::post('/dang-xuat', 'logout');
         Route::post('/thay-doi', 'refresh');
         Route::get('/thong-tin-ca-nhan', 'profile');
-});
+    });
 
 
 Route::group(['prefix' => 'admin'], function () {
@@ -73,3 +71,31 @@ Route::group(['prefix' => 'admin'], function () {
             Route::get('/tai-khoan', 'profile');
         });
 });
+
+Route::group(['prefix' => 'thong-ke'], function() {
+    Route::get('/san-pham/tong-so', [SanPhamController::class, 'tongso']);
+    Route::get('/san-pham/ban-chay-nhat', [SanPhamController::class, 'banchaynhat']);
+    Route::controller(DoanhThuController::class)
+        ->prefix('/doanh-thu')
+        ->group(function () {
+            Route::get('/tuan-nay', 'tuannay');
+            Route::get('/thang-nay', 'thangnay');
+            Route::get('/nam-nay', 'namnay');
+        });
+    Route::get('/khach-hang/tong-so', [KhachHangController::class, 'tongso']);
+    Route::get('/khach-hang/top', [KhachHangController::class, 'top']);
+});
+
+
+Route::apiResource('sliders', SliderController::class);
+Route::apiResource('danh-muc', DanhMucController::class);
+Route::apiResource('thuong-hieu', ThuongHieuController::class);
+Route::apiResource('nha-cung-cap',  NhaCungCapController::class);
+Route::apiResource('san-pham',  SanPhamController::class);
+Route::apiResource('hinh-anh',  HinhAnhController::class);
+Route::apiResource('don-hang', DonHangController::class);
+Route::apiResource('chi-tiet-don-hang', ChiTietDonHangController::class);
+Route::apiResource('quy-cach', QuyCachController::class);
+Route::apiResource('khach-hang', KhachHangController::class);
+
+

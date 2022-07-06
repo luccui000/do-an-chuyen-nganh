@@ -7,14 +7,16 @@ use App\Factories\TonKhoFactory;
 use App\Filters\SanPhamFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SanPhamRequest;
+use App\Models\ChiTietDonHang;
 use App\Models\SanPham;
 use App\Models\TonKho;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SanPhamController extends Controller
 {
-	public function tatca(SanPhamFilter $filter) 
+	public function tatca(SanPhamFilter $filter)
 	{
 		$sanphams = SanPham::with([
             'danhmuc',
@@ -26,7 +28,7 @@ class SanPhamController extends Controller
 		return new JsonResponse(
 			data: $sanphams,
 			status: JsonResponse::HTTP_OK
-		);	
+		);
 	}
     public function index(SanPhamFilter $filter)
     {
@@ -79,6 +81,32 @@ class SanPhamController extends Controller
         ])->orderBy('sp_noi_bat', 'desc')
             ->limit(6)
             ->get();
+
+        return new JsonResponse(
+            data: $sanphams,
+            status: JsonResponse::HTTP_OK
+        );
+    }
+    public function tongso()
+    {
+        $ts = SanPham::count();
+
+        return new JsonResponse(
+            data: $ts,
+            status: JsonResponse::HTTP_OK
+        );
+    }
+    public function banchaynhat()
+    {
+        $sanphamIds = ChiTietDonHang::select([
+                'sanpham_id',
+                DB::raw("count(sanpham_id) as sanpham_count")
+            ])
+            ->groupBy(['sanpham_id'])
+            ->orderByDesc('sanpham_count')
+            ->get();
+        $sanphamIds = $sanphamIds->map(fn($item) => $item->sanpham_id);
+        $sanphams = SanPham::whereIn('id', $sanphamIds)->get();
 
         return new JsonResponse(
             data: $sanphams,
