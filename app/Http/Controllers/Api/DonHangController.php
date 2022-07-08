@@ -6,6 +6,7 @@ use App\Factories\DonHangFactory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DonHangRequest;
 use App\Models\DonHang;
+use App\Models\KhachHang;
 use App\Transformers\DonHangTransformer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -40,8 +41,15 @@ class DonHangController extends Controller
     }
     public function store(DonHangRequest $request)
     {
+        $formData = $request->all();
+        if($request->has('khachhang_id')) {
+            $khachhang = KhachHang::findOrFail($request->khachhang_id);
+            $formData['ho'] = $khachhang->ho_khach_hang;
+            $formData['ten'] = $khachhang->ten_khach_hang;
+            $formData['so_dien_thoai'] = $khachhang->so_dien_thoai;
+        }
         $donhang = DonHang::create(
-            DonHangFactory::make($request->all())
+            DonHangFactory::make($formData)
                 ->toArray()
         );
         return new JsonResponse(

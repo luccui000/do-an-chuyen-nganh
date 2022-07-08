@@ -8,8 +8,11 @@ class DonHangValueObject implements ValueObject
 {
     public function __construct(
         private string $ma_don_hang,
-        private int $khachhang_id,
+        private int|null $khachhang_id,
         private int|null $magiamgia_id,
+        private string|null $ho,
+        private string|null $ten,
+        private string|null $so_dien_thoai,
         private string $ma_xa,
         private int $phi_giao_hang,
         private int $thanh_tien,
@@ -28,6 +31,9 @@ class DonHangValueObject implements ValueObject
             'ma_don_hang' => $this->ma_don_hang,
             'khachhang_id' => $this->khachhang_id,
             'magiamgia_id' => $this->magiamgia_id,
+            'ho' => $this->ho,
+            'ten' => $this->ten,
+            'so_dien_thoai' => $this->so_dien_thoai,
             'ma_xa' => $this->ma_xa,
             'phi_giao_hang' => $this->phi_giao_hang,
             'thanh_tien' => $this->thanh_tien,

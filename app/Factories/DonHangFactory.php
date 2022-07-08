@@ -16,9 +16,13 @@ class DonHangFactory implements Factory
         return new DonHangValueObject(
             ma_don_hang: array_key_exists('ma_don_hang', $attributes) ?
                 $attributes['ma_don_hang'] : Str::upper(Str::random(8)),
-            khachhang_id: $attributes['khachhang_id'],
+            khachhang_id: array_key_exists('khachhang_id', $attributes) ?
+                $attributes['khachhang_id'] : null,
             magiamgia_id: array_key_exists('magiamgia_id', $attributes) ?
                 $attributes['magiamgia_id']: null,
+            ho: $attributes['ho'],
+            ten: $attributes['ten'],
+            so_dien_thoai: $attributes['so_dien_thoai'],
             ma_xa: $attributes['ma_xa'],
             phi_giao_hang: $attributes['phi_giao_hang'],
             thanh_tien: $attributes['thanh_tien'],
