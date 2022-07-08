@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\Admin\BieuDoController;
 use App\Http\Controllers\Api\Admin\DangNhapController;
+use App\Http\Controllers\Api\Admin\DashboardController;
 use App\Http\Controllers\Api\ChiTietDonHangController;
 use App\Http\Controllers\Api\DanhMucController;
 use App\Http\Controllers\Api\DiaChiController;
@@ -75,6 +77,7 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 Route::group(['prefix' => 'thong-ke'], function() {
+    Route::get('/', [DashboardController::class, 'thongke']);
     Route::get('/san-pham/tong-so', [SanPhamController::class, 'tongso']);
     Route::get('/san-pham/ban-chay-nhat', [SanPhamController::class, 'banchaynhat']);
     Route::get('/san-pham/xem-nhieu-nhat', [SanPhamController::class, 'xemnhieunhat']);
@@ -89,6 +92,10 @@ Route::group(['prefix' => 'thong-ke'], function() {
         });
     Route::get('/khach-hang/tong-so', [KhachHangController::class, 'tongso']);
     Route::get('/khach-hang/top', [KhachHangController::class, 'top']);
+});
+
+Route::group(['prefix' => 'bieu-do'], function() {
+    Route::get('/doanh-thu-tuan', [BieuDoController::class, 'doanhthutuan']);
 });
 
 
