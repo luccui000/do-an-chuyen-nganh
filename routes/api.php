@@ -81,7 +81,9 @@ Route::group(['prefix' => 'thong-ke'], function() {
     Route::controller(DoanhThuController::class)
         ->prefix('/doanh-thu')
         ->group(function () {
+            Route::get('/tuan-truoc', 'tuantruoc');
             Route::get('/tuan-nay', 'tuannay');
+            Route::get('/thang-truoc', 'thangtruoc');
             Route::get('/thang-nay', 'thangnay');
             Route::get('/nam-nay', 'namnay');
         });

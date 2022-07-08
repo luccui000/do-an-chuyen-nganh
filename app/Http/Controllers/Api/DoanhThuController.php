@@ -10,6 +10,25 @@ use Illuminate\Http\Request;
 
 class DoanhThuController extends Controller
 {
+    const DAY_IN_WEEK = 7;
+
+    public function tuantruoc()
+    {
+        $startOfPrevWeek = Carbon::now()->subDays(
+            Carbon::now()->dayOfWeek + self::DAY_IN_WEEK
+        );
+        $endOfPrevWeek = Carbon::now()->subDays(
+            Carbon::now()->dayOfWeek
+        );
+        $dt = DonHang::where('created_at', '>=', $startOfPrevWeek)
+            ->where('created_at', '<', $endOfPrevWeek)
+            ->sum('tong_tien');
+
+        return new JsonResponse(
+            data: intval($dt),
+            status: JsonResponse::HTTP_OK
+        );
+    }
     public function tuannay()
     {
         $now = Carbon::now();
@@ -19,6 +38,17 @@ class DoanhThuController extends Controller
 
         return new JsonResponse(
             data: intval($dt),
+            status: JsonResponse::HTTP_OK
+        );
+    }
+    public function thangtruoc()
+    {
+        $prevMonth = Carbon::now()->subMonth(1);
+        $doanhthu = DonHang::whereMonth('created_at', '=', $prevMonth)
+            ->sum('tong_tien');
+
+        return new JsonResponse(
+            data: intval($doanhthu),
             status: JsonResponse::HTTP_OK
         );
     }
