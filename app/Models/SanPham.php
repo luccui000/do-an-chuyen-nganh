@@ -91,7 +91,7 @@ class SanPham extends Model
     {
         return $this->belongsToMany(DonHang::class, 'chitiet_donhangs', 'sanpham_id', 'donhang_id');
     }
-    public function soLuongTruyCap()
+    public function soLuongTruyCaps()
     {
         return $this->morphOne(SoLuongTruyCap::class, 'soluongtruycapable');
     }

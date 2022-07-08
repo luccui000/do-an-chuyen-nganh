@@ -113,6 +113,17 @@ class SanPhamController extends Controller
             status: JsonResponse::HTTP_OK
         );
     }
+    public function xemnhieunhat()
+    {
+        $sanphams = SanPham::with([
+            'soluongtruycaps'
+        ])->get();
+
+        return new JsonResponse(
+            data: $sanphams,
+            status: JsonResponse::HTTP_OK
+        );
+    }
     public function store(SanPhamRequest $request)
     {
         $sanpham = SanPhamFactory::make($request->all())

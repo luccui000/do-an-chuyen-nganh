@@ -39,6 +39,8 @@ Route::get('/thanh-toan/phuong-thuc-thanh-toan', [PhuongThucThanhToanController:
 Route::post('/thanh-toan', [ThanhToanController::class, 'purchase']);
 Route::post('/thanh-toan/chuyen-huong', [ThanhToanController::class, 'url']);
 
+Route::get('/khach-hang/{id}/don-hang', [KhachHangController::class, 'donhang']);
+
 Route::controller(DiaChiController::class)
     ->prefix('/dia-chi')
     ->group(function () {
@@ -75,6 +77,7 @@ Route::group(['prefix' => 'admin'], function () {
 Route::group(['prefix' => 'thong-ke'], function() {
     Route::get('/san-pham/tong-so', [SanPhamController::class, 'tongso']);
     Route::get('/san-pham/ban-chay-nhat', [SanPhamController::class, 'banchaynhat']);
+    Route::get('/san-pham/xem-nhieu-nhat', [SanPhamController::class, 'xemnhieunhat']);
     Route::controller(DoanhThuController::class)
         ->prefix('/doanh-thu')
         ->group(function () {
