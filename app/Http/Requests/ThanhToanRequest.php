@@ -24,15 +24,14 @@ class ThanhToanRequest extends FormRequest
     public function rules()
     {
         return [
-            'donhang_id' => 'required|exists:donhangs,id',
+            'ma_don_hang' => 'required',
             'tong_tien' => 'required|numeric'
         ];
     }
     public function messages()
     {
         return [
-            'donhang_id.required' => 'Vui lòng điền thông tin đơn hàng',
-            'donhang_id.exists' => 'Đơn hàng không tồn tại trong hệ thống',
+            'ma_don_hang.required' => 'Vui lòng điền thông tin đơn hàng',
             'tong_tien.required' => 'Thiếu thông tin giá trị đơn hàng',
             'tong_tien.numeric' => 'Giá trị đơn hàng không hợp lệ'
         ];
