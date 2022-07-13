@@ -47,10 +47,17 @@ class DoanhThu
             ->sum('tong_tien');
         return $dt;
     }
+    public function namtruoc()
+    {
+        $preYear = Carbon::now()->subYear(1);
+        $dt = DonHang::whereYear('created_at', '=', $preYear)
+            ->sum('tong_tien');
+        return $dt;
+    }
     public function namnay()
     {
-        $currYear = Carbon::now()->year;
-        $dt = DonHang::whereYear('created_at', '=', $currYear)
+        $currYear = Carbon::now();
+        $dt = DonHang::whereYear('created_at', str($currYear))
             ->sum('tong_tien');
         return $dt;
     }

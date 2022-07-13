@@ -181,7 +181,14 @@ class SanPhamController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+        $sanpham = SanPham::findOrFail($id);
+        unset($data['id']);
+        unset($data['tonkhos']);
+
+        $sanpham->update($data);
+
+        return new JsonResponse($sanpham);
     }
 
     public function destroy($id)

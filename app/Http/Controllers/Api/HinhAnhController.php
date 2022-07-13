@@ -14,7 +14,7 @@ class HinhAnhController extends Controller
 {
     public function index()
     {
-        $hinhanhs = HinhAnh::all();
+        $hinhanhs = HinhAnh::orderBy('created_at', 'desc')->get();
 
         return fractal($hinhanhs, new HinhAnhTransformer())
             ->respond(JsonResponse::HTTP_OK, [], JSON_PRETTY_PRINT);
@@ -62,6 +62,9 @@ class HinhAnhController extends Controller
 
     public function destroy($id)
     {
-        //
+        HinhAnh::destroy($id);
+        return new JsonResponse(
+            data: 'OK'
+        );
     }
 }

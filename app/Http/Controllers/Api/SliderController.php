@@ -23,14 +23,13 @@ class SliderController extends Controller
 
     public function store(Create $request)
     {
-
-        $slider_id = Slider::insertGetId(
+        $slider = Slider::create(
             SliderFactory::make(
                 $request->all()
             )->toArray()
         );
         return new JsonResponse(
-            data: Slider::findOrFail($slider_id),
+            data: $slider,
             status: 201
         );
     }

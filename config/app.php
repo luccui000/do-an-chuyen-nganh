@@ -186,6 +186,7 @@ return [
          * Package Service Providers...
          */
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        LaravelDaily\Invoices\InvoiceServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -213,6 +214,8 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
+        'Invoice' => LaravelDaily\Invoices\Facades\Invoice::class
+
     ])->toArray(),
 
 ];

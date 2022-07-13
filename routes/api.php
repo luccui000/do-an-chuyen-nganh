@@ -88,16 +88,21 @@ Route::group(['prefix' => 'thong-ke'], function() {
             Route::get('/tuan-nay', 'tuannay');
             Route::get('/thang-truoc', 'thangtruoc');
             Route::get('/thang-nay', 'thangnay');
+            Route::get('/nam-truoc', 'namtruoc');
             Route::get('/nam-nay', 'namnay');
         });
     Route::get('/khach-hang/tong-so', [KhachHangController::class, 'tongso']);
     Route::get('/khach-hang/top', [KhachHangController::class, 'top']);
+    Route::get('/don-hang/gan-nhat', [DonHangController::class, 'donhanggannhat']);
 });
 
 Route::group(['prefix' => 'bieu-do'], function() {
     Route::get('/doanh-thu-tuan', [BieuDoController::class, 'doanhthutuan']);
 });
-
+Route::post('/don-hang/cho-xac-nhan', [DonHangController::class, 'choXacNhan']);
+Route::post('/don-hang/dang-giao-hang', [DonHangController::class, 'dangGiaoHang']);
+Route::post('/don-hang/da-huy', [DonHangController::class, 'huyDonHang']);
+Route::post('/don-hang/in-hoa-don', [DonHangController::class, 'inHoaDon']);
 
 Route::apiResource('sliders', SliderController::class);
 Route::apiResource('danh-muc', DanhMucController::class);

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -36,7 +37,12 @@ class KhachHang extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(DonHang::class, 'khachhang_id', 'id');
     }
-
+    public function hoTen(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => $this->ho_khach_hang . ' ' . $this->ten_khach_hang
+        );
+    }
     public function getJWTIdentifier()
     {
         return $this->getKey();

@@ -52,4 +52,11 @@ class DoanhThuController extends Controller
             status: JsonResponse::HTTP_OK
         );
     }
+    public function namtruoc()
+    {
+        return new JsonResponse(
+            data: intval($this->doanhThu->namtruoc()),
+            status: JsonResponse::HTTP_OK
+        );
+    }
 }

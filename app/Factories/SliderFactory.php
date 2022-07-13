@@ -12,7 +12,7 @@ class SliderFactory
         return new SliderValueObject(
             id: array_key_exists('id', $attributes) ?
                 data_get($attributes, 'id'): null,
-            background_image: data_get($attributes, 'primary_text'),
+            background_image: data_get($attributes, 'background_image'),
             slider_image: array_key_exists('slider_image', $attributes) ?
                 data_get($attributes, 'slider_image') : null,
             primary_text: data_get($attributes, 'primary_text'),
